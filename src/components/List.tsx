@@ -13,11 +13,11 @@ const List = ({ todoData, setTodoData }: GreetingsProps) => {
     return {
       padding: "10px",
       borderBottom: "1px #ccc dotted",
-      textDecoration: completed ? "line-throgh" : "none", // true/false
+      textDecoration: completed ? "line-through" : "none", // true/false
     };
   };
 
-  const handleCompleteChange = (id: number) => {
+  const handleCompleteChange = (id: number): void => {
     let newTodoData = todoData.map((data: TodoListType) => {
       if (data.id === id) {
         // state안의 id와 클릭한것의 id가 같으면

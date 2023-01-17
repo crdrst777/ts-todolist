@@ -1,34 +1,17 @@
-import React, { useState, Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
-import TodoListType from "../../src/compiler/types";
 
 interface GreetingsProps {
   // TodoDataProps
-  setTodoData: Dispatch<SetStateAction<TodoListType[]>>;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+  createTodo: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const Form = ({ setTodoData }: GreetingsProps) => {
-  const [value, setValue] = useState("");
-
+const Form = ({ value, setValue, createTodo }: GreetingsProps) => {
   //
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-  };
-
-  // todo 추가 (제출)
-  const createTodo = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // 새로운 할일 데이터
-    let newTodo: TodoListType = {
-      id: Date.now(),
-      title: value,
-      completed: false,
-    };
-
-    // 원래 있던 할일에 새로운 할일 더해주기
-    setTodoData((prev) => [...prev, newTodo]);
-    setValue("");
   };
 
   return (
