@@ -33,13 +33,27 @@ export default Form;
 
 const FormContainer = styled.form`
   display: flex;
+  padding-top: 0.5rem;
 `;
 
 const InputText = styled.input`
-  flex: 10;
-  padding: 5px;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-right: 1rem;
+  color: #a0a2a5;
+  border: 1px solid #ecebec;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 /0.1);
 `;
 
 const SubmitBtn = styled.input`
-  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #6da3de;
+  color: #6da3de;
+  border-radius: 0.25rem;
+  background-color: #ffffff;
+  :hover {
+    color: #ffffff;
+    background-color: #8bbfff;
+  }
 `;

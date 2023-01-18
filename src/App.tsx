@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import styled from "styled-components";
 import List from "./components/List";
 import Form from "./components/Form";
 import TodoListType from "../src/compiler/types";
@@ -28,18 +29,42 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <div className="todoBlock">
-        <div className="title">
+    <Container>
+      <TodoBlock>
+        <Title>
           <h1>할 일 목록</h1>
-        </div>
+        </Title>
 
         <List todoData={todoData} setTodoData={setTodoData} />
 
         <Form value={value} setValue={setValue} createTodo={createTodo} />
-      </div>
-    </div>
+      </TodoBlock>
+    </Container>
   );
 }
 
 export default App;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #dce9ff;
+`;
+const TodoBlock = styled.div`
+  width: 100%;
+  padding: 1.5rem;
+  margin: 1rem;
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 /0.1);
+  width: 75%;
+  max-width: 32rem;
+`;
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+`;
