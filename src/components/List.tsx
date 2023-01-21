@@ -44,7 +44,7 @@ const List = ({ todoData, setTodoData }: GreetingsProps) => {
     // 목적지가 없으면(이벤트 취소) 이 함수를 종료합니다.
     if (!result.destination) return;
     // 리액트 불변성을 지켜주기 위해 새로운 todoData 생성
-    const newTodoData = todoData;
+    const newTodoData = [...todoData];
     // 변경시키는 아이템을 배열에서 지워줍니다. a.splice(n, 1) -> n번째 인덱스의 아이템 1개를 삭제
     // [reorderedItem] -> 1.에서 지운 그 아이템 하나를 담은 배열
     const [reorderedItem] = newTodoData.splice(result.source.index, 1);
@@ -72,6 +72,7 @@ const List = ({ todoData, setTodoData }: GreetingsProps) => {
                       {...provided.draggableProps}
                       ref={provided.innerRef}
                       {...provided.dragHandleProps}
+                      isDragging={snapshot.isDragging}
                     >
                       <CheckboxSpanContainer>
                         <input
@@ -96,6 +97,7 @@ const List = ({ todoData, setTodoData }: GreetingsProps) => {
                   )}
                 </Draggable>
               ))}
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
@@ -106,7 +108,7 @@ const List = ({ todoData, setTodoData }: GreetingsProps) => {
 
 export default List;
 
-const ListContainer = styled.div`
+const ListContainer = styled.div<{ isDragging: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -115,7 +117,9 @@ const ListContainer = styled.div`
   margin: 0.5rem 0;
   border-radius: 0.25rem;
   color: #898a91;
-  background-color: #f5f4f7;
+  /* background-color: #f5f4f7; */
+  background-color: ${(props) => (props.isDragging ? "#9DA2B0" : "#f5f4f7")};
+  /* "#74b9ff" */
 `;
 
 const CheckboxSpanContainer = styled.div`
@@ -129,6 +133,6 @@ const DeleteBtnContainer = styled.div`
     padding: 0.5rem 1rem;
     float: right;
     border: none;
-    background-color: #f5f4f7;
+    background-color: transparent;
   }
 `;
