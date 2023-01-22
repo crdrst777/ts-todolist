@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import styled from "styled-components";
-import List from "./components/List";
+import Lists from "./components/Lists";
 import Form from "./components/Form";
 import TodoListType from "../src/compiler/types";
 
@@ -35,7 +35,7 @@ function App() {
           <h1>할 일 목록</h1>
         </Title>
 
-        <List todoData={todoData} setTodoData={setTodoData} />
+        <Lists todoData={todoData} setTodoData={setTodoData} />
 
         <Form value={value} setValue={setValue} createTodo={createTodo} />
       </TodoBlock>
