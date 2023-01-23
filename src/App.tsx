@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./App.css";
 import styled from "styled-components";
 import Lists from "./components/Lists";
@@ -6,6 +6,8 @@ import Form from "./components/Form";
 import TodoListType from "../src/compiler/types";
 
 function App() {
+  console.log("App component");
+
   // useState에 제네릭을 쓰는 상황:
   // 상태가 null 인 상황이 발생 할 수 있거나, 초기값이 빈배열일때
   // 타입스크립트에서는 빈배열([])을 never type으로 인식함
@@ -28,6 +30,18 @@ function App() {
     setValue("");
   };
 
+  // todo 삭제
+  // useCallback 을 이용한 함수 최적화.
+  const deleteTodo = useCallback(
+    (id: number) => {
+      let newTodoData = todoData.filter((data: TodoListType) => data.id !== id);
+      // console.log("newTodoData", newTodoData);
+      setTodoData(newTodoData);
+    },
+    [todoData]
+    // 함수 내에서 참조하는 state, props가 있다면 의존성 배열에 추가. todoData가 바뀔때만 다시 생성해줄수있게.
+  );
+
   return (
     <Container>
       <TodoBlock>
@@ -35,7 +49,11 @@ function App() {
           <h1>할 일 목록</h1>
         </Title>
 
-        <Lists todoData={todoData} setTodoData={setTodoData} />
+        <Lists
+          todoData={todoData}
+          setTodoData={setTodoData}
+          deleteTodo={deleteTodo}
+        />
 
         <Form value={value} setValue={setValue} createTodo={createTodo} />
       </TodoBlock>

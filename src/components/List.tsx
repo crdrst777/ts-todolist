@@ -10,6 +10,7 @@ interface GreetingsProps {
   snapshot: any;
   todoData: TodoListType[];
   setTodoData: Dispatch<SetStateAction<TodoListType[]>>;
+  deleteTodo: (id: number) => void;
 }
 
 const List = ({
@@ -20,7 +21,10 @@ const List = ({
   snapshot,
   todoData,
   setTodoData,
+  deleteTodo,
 }: GreetingsProps) => {
+  console.log("List component");
+
   const handleCompleteChange = (id: number) => {
     let newTodoData = todoData.map((data: TodoListType) => {
       if (data.id === id) {
@@ -34,19 +38,11 @@ const List = ({
 
   // todo 삭제
 
-  /**
-   *
-   * @param id 숫자
-   * @returns void
-   * @todo todo삭제 함수
-   * @deprecated
-   */
-
-  const deleteTodo = (id: number) => {
-    let newTodoData = todoData.filter((data: TodoListType) => data.id !== id);
-    // console.log("newTodoData", newTodoData);
-    setTodoData(newTodoData);
-  };
+  // const deleteTodo = (id: number) => {
+  //   let newTodoData = todoData.filter((data: TodoListType) => data.id !== id);
+  //   // console.log("newTodoData", newTodoData);
+  //   setTodoData(newTodoData);
+  // };
 
   return (
     <>

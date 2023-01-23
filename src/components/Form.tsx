@@ -9,6 +9,8 @@ interface GreetingsProps {
 }
 
 const Form = ({ value, setValue, createTodo }: GreetingsProps) => {
+  console.log("Form component");
+
   //
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
