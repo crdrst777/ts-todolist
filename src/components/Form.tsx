@@ -57,5 +57,6 @@ const SubmitBtn = styled.input`
   :hover {
     color: #ffffff;
     background-color: #8bbfff;
+    cursor: pointer;
   }
 `;

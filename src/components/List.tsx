@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import TodoListType from "../compiler/types";
 
@@ -23,7 +23,8 @@ const List = ({
   setTodoData,
   deleteTodo,
 }: GreetingsProps) => {
-  console.log("List component");
+  const [isEditing, setIsEditing] = useState(false); // 수정중인지 여부
+  const [editedTitle, setEditedTitle] = useState(title); // 수정할 글
 
   const handleCompleteChange = (id: number) => {
     let newTodoData = todoData.map((data: TodoListType) => {
@@ -36,16 +37,40 @@ const List = ({
     setTodoData(newTodoData);
   };
 
-  // todo 삭제
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedTitle(e.target.value);
+  };
 
-  // const deleteTodo = (id: number) => {
-  //   let newTodoData = todoData.filter((data: TodoListType) => data.id !== id);
-  //   // console.log("newTodoData", newTodoData);
-  //   setTodoData(newTodoData);
-  // };
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    let newTodoData = todoData.map((data: TodoListType) => {
+      if (data.id === id) {
+        // 수정하지 않은채로 동일하면
+        data.title = editedTitle;
+      }
+      return data;
+    });
+    setTodoData(newTodoData);
+    setIsEditing(false);
+  };
 
-  return (
-    <>
+  if (isEditing) {
+    return (
+      <EditingContainer>
+        <form>
+          <input type="text" value={editedTitle} onChange={handleEditChange} />
+        </form>
+
+        <BtnContainer>
+          <button type="submit" onClick={handleSubmit}>
+            save
+          </button>
+          <button onClick={() => setIsEditing(false)}>x</button>
+        </BtnContainer>
+      </EditingContainer>
+    );
+  } else {
+    return (
       <ListContainer
         key={id}
         {...provided.draggableProps}
@@ -67,13 +92,47 @@ const List = ({
         </CheckboxSpanContainer>
         <DeleteBtnContainer>
           <button onClick={() => deleteTodo(id)}>x</button>
+          <button onClick={() => setIsEditing(true)}>edit</button>
         </DeleteBtnContainer>
       </ListContainer>
-    </>
-  );
+    );
+  }
 };
 
 export default List;
+
+const EditingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0.25rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 0.25rem;
+  color: #898a91;
+  background-color: #f5f4f7;
+
+  form {
+    align-items: center;
+  }
+  input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-right: 1rem;
+    border-radius: 0.25rem;
+    color: #6a7280;
+    border: 1px solid #ecebec;
+  }
+`;
+
+const BtnContainer = styled.div`
+  align-items: center;
+
+  button {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+`;
 
 const ListContainer = styled.div<{ isDragging: boolean }>`
   display: flex;
@@ -84,13 +143,20 @@ const ListContainer = styled.div<{ isDragging: boolean }>`
   margin: 0.5rem 0;
   border-radius: 0.25rem;
   color: #898a91;
-  /* background-color: #f5f4f7; */
   background-color: ${(props) => (props.isDragging ? "#9DA2B0" : "#f5f4f7")};
   /* "#74b9ff" */
 `;
 
 const CheckboxSpanContainer = styled.div`
   align-items: center;
+
+  input {
+    cursor: pointer;
+  }
+
+  span {
+    padding-left: 0.5rem;
+  }
 `;
 
 const DeleteBtnContainer = styled.div`
@@ -99,7 +165,6 @@ const DeleteBtnContainer = styled.div`
   button {
     padding: 0.5rem 1rem;
     float: right;
-    border: none;
-    background-color: transparent;
+    cursor: pointer;
   }
 `;

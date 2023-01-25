@@ -42,11 +42,16 @@ function App() {
     // 함수 내에서 참조하는 state, props가 있다면 의존성 배열에 추가. todoData가 바뀔때만 다시 생성해줄수있게.
   );
 
+  const deleteTodos = () => {
+    setTodoData([]);
+  };
+
   return (
     <Container>
       <TodoBlock>
         <Title>
-          <h1>할 일 목록</h1>
+          <p>할 일 목록</p>
+          <button onClick={deleteTodos}>Delete All</button>
         </Title>
 
         <Lists
@@ -85,4 +90,12 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.75rem;
+
+  p {
+    font-weight: 600;
+  }
+
+  button {
+    cursor: pointer;
+  }
 `;
