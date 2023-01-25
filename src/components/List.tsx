@@ -41,7 +41,7 @@ const List = ({
     setEditedTitle(e.target.value);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let newTodoData = todoData.map((data: TodoListType) => {
       if (data.id === id) {
@@ -56,17 +56,12 @@ const List = ({
 
   if (isEditing) {
     return (
-      <EditingContainer>
-        <form>
-          <input type="text" value={editedTitle} onChange={handleEditChange} />
-        </form>
-
-        <BtnContainer>
-          <button type="submit" onClick={handleSubmit}>
-            save
-          </button>
+      <EditingContainer onSubmit={handleSubmit}>
+        <input type="text" value={editedTitle} onChange={handleEditChange} />
+        <div className="btnContainer">
+          <button type="submit">save</button>
           <button onClick={() => setIsEditing(false)}>x</button>
-        </BtnContainer>
+        </div>
       </EditingContainer>
     );
   } else {
@@ -101,7 +96,7 @@ const List = ({
 
 export default List;
 
-const EditingContainer = styled.div`
+const EditingContainer = styled.form`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -112,24 +107,17 @@ const EditingContainer = styled.div`
   color: #898a91;
   background-color: #f5f4f7;
 
-  form {
-    align-items: center;
-  }
   input {
-    width: 100%;
+    width: 62%;
     padding: 0.5rem 0.75rem;
     margin-right: 1rem;
     border-radius: 0.25rem;
     color: #6a7280;
     border: 1px solid #ecebec;
   }
-`;
-
-const BtnContainer = styled.div`
-  align-items: center;
 
   button {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.8rem;
     cursor: pointer;
   }
 `;
@@ -163,7 +151,7 @@ const DeleteBtnContainer = styled.div`
   align-items: center;
 
   button {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.8rem;
     float: right;
     cursor: pointer;
   }
